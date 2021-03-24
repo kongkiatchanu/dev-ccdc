@@ -28,15 +28,30 @@ else {
 
 
 	mysql_select_db("dev", $conn);
-	$sql = "INSERT INTO `log_data_2561` (`source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `nickname`, `source_ip`) VALUES ($station, $pm10, $pm2_5, $temp, $humid, \"$nickname\", \"$src_ip\")";
+	$sql = "INSERT INTO `log_data_2561` (`source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `source_ip`) VALUES ($station, $pm10, $pm2_5, $temp, $humid, \"$src_ip\")";
+	// echo "$sql";
 	$res = mysql_query($sql, $conn);
-
+        if (!$res) {
+            // echo "FAILED: " . $sql . "\n";
+            $message  = 'Invalid query: ' . mysql_error() . "\n";
+            $message .= 'Whole query: ' . $sql . "\n";
+            echo $message;
+        }
+        else {
+            echo "OK: " . $sql . "\n";
+        }
 
 	$sql = "INSERT INTO `log_data_2562` (`source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `nickname`, `source_ip`) VALUES ($station, $pm10, $pm2_5, $temp, $humid, \"$nickname\", \"$src_ip\")";
 	$res = mysql_query($sql, $conn);
-	echo "insert result = " . print_r($res, 1) . "\r\n";
-
-	echo "sql=".print_r($sql, 1);
+        if (!$res) {
+            // echo "FAILED: " . $sql . "\n";
+            $message  = 'Invalid query: ' . mysql_error() . "\n";
+            $message .= 'Whole query: ' . $sql . "\n";
+            echo $message;
+        }
+        else {
+            echo "OK: " . $sql . "\n";
+        }
 	mysql_close($conn);
 
 	// echo "$POST=" . print_r(json_encode($_POST), 1);
