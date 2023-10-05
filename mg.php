@@ -12,7 +12,7 @@ if ($mysqli -> connect_errno) {
 }
 
 $sql ="SELECT max(log_id) as id FROM `log_data_2562`";
-$mysqli->query($sql);
+$result = $mysqli->query($sql);
 $rs = $result -> fetch_assoc();
 
 print_r($rs);
