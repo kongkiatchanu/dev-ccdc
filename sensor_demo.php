@@ -42,12 +42,15 @@ else {
   $sql_temp = "INSERT INTO `log_zdata` (`source_id`, `log_pm1`, `log_pm10`, `log_pm25`, `temp`, `humid`, `wind_speed`, `wind_direction`, `atmospheric`, `source_ip`) VALUES ($station, NULL, $pm10, $pm2_5, $temp, $humid, NULL, NULL, NULL, \"$src_ip\")";
   $res3 = $mysqli->query($sql_temp);
 
+  $sql = "INSERT INTO `log_data_2561` (`source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `source_ip`) VALUES ($station, $pm10, $pm2_5, $temp, $humid, \"$src_ip\")";
+  $res = $mysqli->query($sql);
+
   $sql2 = "INSERT INTO `log_data_2562` (`source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `nickname`, `source_ip`) VALUES ($station, $pm10, $pm2_5, $temp, $humid, \"$nickname\", \"$src_ip\")";
   $res2 = $mysqli->query($sql2);
 
+  file_put_contents('/home/dev/public_html/assets/api/logs/post_sql.log', date("Y-m-d H:i:s") . "|" . $sql2 .  "\n", FILE_APPEND);
 
-  $sql = "INSERT INTO `log_data_2561` (`source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `source_ip`) VALUES ($station, $pm10, $pm2_5, $temp, $humid, \"$src_ip\")";
-  $res = $mysqli->query($sql);
+
   // if (!$res) {
   //     // echo "FAILED: " . $sql . "\n";
   //     //$message  = 'Invalid query: ' . mysql_error() . "\n";
