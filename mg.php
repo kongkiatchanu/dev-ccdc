@@ -10,6 +10,14 @@ if ($mysqli -> connect_errno) {
   echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
   exit();
 }
+
+$sql ="SELECT max(log_id) as id FROM `log_data_2562`";
+$mysqli->query($sql);
+$rs = $result -> fetch_assoc();
+
+print_r($rs);
+exit;
+
 $sql = "SELECT * FROM `log_data_2561` WHERE `log_id` BETWEEN 24313865 AND 24625804 ORDER BY `log_data_2561`.`log_id` ASC ";
 $result = $mysqli->query($sql);
 while($row = $result -> fetch_assoc()){
