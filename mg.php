@@ -32,6 +32,6 @@ while($row = $resultx -> fetch_assoc()){
     $res2 = $mysqli->query($sql2);
     echo $sql2;
     echo '<br/>';
-    echo $log_id.'-'.$station.'<hr/>',
-    exit;
+    echo $log_id.'-'.$station.'<hr/>';
+    
 }
