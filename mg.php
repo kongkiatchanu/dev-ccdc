@@ -13,8 +13,18 @@ if ($mysqli -> connect_errno) {
 $sql = "SELECT * FROM `log_data_2561` WHERE `log_id` BETWEEN 24313865 AND 24625804 ORDER BY `log_data_2561`.`log_id` ASC ";
 $result = $mysqli->query($sql);
 while($row = $result -> fetch_assoc()){
-    echo '<pre>';
-    print_r($row);
-    echo '</pre>';
+    $log_id = $row['log_id'];
+    $station = $row['source_id'];
+    $pm10 = $row['log_pm10'];
+    $pm2_5 = $row['log_pm25'];
+    $temp = $row['temp'];
+    $humid = $row['humid'];
+    $log_datetime = $row['log_datetime'];
+    $src_ip = $row['source_ip'];
+   
+    $sql2 = "INSERT INTO `log_data_2562` (`log_id`, `source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `nickname`, log_datetime, `source_ip`) VALUES ($log_id, $station, $pm10, $pm2_5, $temp, $humid, \"$log_datetime\" , \"$src_ip\")";
+    echo $sql2;
+    //$res2 = $mysqli->query($sql2);
+
     exit;
 }
