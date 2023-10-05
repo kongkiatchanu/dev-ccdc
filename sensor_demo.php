@@ -46,9 +46,10 @@ else {
   $res = $mysqli->query($sql);
 
   $sql2 = "INSERT INTO `log_data_2562` (`source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `nickname`, `source_ip`) VALUES ($station, $pm10, $pm2_5, $temp, $humid, \"$nickname\", \"$src_ip\")";
+  file_put_contents('/home/dev/public_html/assets/api/logs/post_sql.log', date("Y-m-d H:i:s") . "|" . $sql2 .  "\n", FILE_APPEND);
   $res2 = $mysqli->query($sql2);
 
-  file_put_contents('/home/dev/public_html/assets/api/logs/post_sql.log', date("Y-m-d H:i:s") . "|" . $sql2 .  "\n", FILE_APPEND);
+  
 
 
   // if (!$res) {
