@@ -28,7 +28,7 @@ while($row = $resultx -> fetch_assoc()){
     $log_datetime = $row['log_datetime'];
     $src_ip = $row['source_ip'];
    
-    $sql2 = "INSERT INTO `log_data_2562` (`log_id`, `source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `nickname`, log_datetime, `source_ip`) VALUES ($log_id, $station, $pm10, $pm2_5, $temp, $humid, \"$log_datetime\" , \"$src_ip\")";
+    $sql2 = "INSERT INTO `log_data_2562` (`log_id`, `source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, log_datetime, `source_ip`) VALUES ($log_id, $station, $pm10, $pm2_5, $temp, $humid, \"$log_datetime\" , \"$src_ip\")";
    // $res2 = $mysqli->query($sql2);
     echo $sql2;
     echo '<br/>';
