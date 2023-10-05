@@ -25,8 +25,8 @@ while($row = $resultx -> fetch_assoc()){
     $station = $row['source_id'];
     $pm10 = $row['log_pm10'];
     $pm2_5 = $row['log_pm25'];
-    $temp = $row['temp'];
-    $humid = $row['humid'];
+    $temp = $row['temp']!=null ? $row['temp'] : 0;
+    $humid = $row['humid']!=null ? $row['humid'] : 0;
     $log_datetime = $row['log_datetime'];
     $src_ip = $row['source_ip'];
    
