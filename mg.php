@@ -11,4 +11,10 @@ if ($mysqli -> connect_errno) {
   exit();
 }
 $sql = "SELECT * FROM `log_data_2561` WHERE `log_id` BETWEEN 24313865 AND 24625804 ORDER BY `log_data_2561`.`log_id` ASC ";
-echo $sql;
+$rs = $mysqli->query($sql);
+while($row = $rs->fetch_accoc()){
+    echo '<pre>';
+    print_r($row);
+    echo '</pre>';
+    exit;
+}
