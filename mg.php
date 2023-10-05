@@ -16,7 +16,7 @@ $result = $mysqli->query($sql);
 $rs = $result -> fetch_assoc();
 
 
-$sql = "SELECT * FROM `log_data_2561` WHERE `log_id` > ".$rs['id']." AND `log_id` <= 24625804 ORDER BY `log_data_2561`.`log_id` ASC limit 1000";
+$sql = "SELECT * FROM `log_data_2561` WHERE `log_id` > ".$rs['id']." AND `log_id` <= 24625804 ORDER BY `log_data_2561`.`log_id` ASC limit 2000";
 echo $sql;
 echo '<br>';
 $resultx = $mysqli->query($sql);
