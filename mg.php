@@ -15,8 +15,6 @@ $sql ="SELECT max(log_id) as id FROM `log_data_2562`";
 $result = $mysqli->query($sql);
 $rs = $result -> fetch_assoc();
 
-print_r($rs);
-
 
 $sql = "SELECT * FROM `log_data_2561` WHERE `log_id` > ".$rs['id']." AND `log_id` <= 24625804 ORDER BY `log_data_2561`.`log_id` ASC limit 1";
 $result = $mysqli->query($sql);
