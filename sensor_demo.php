@@ -1,64 +1,81 @@
 <?php
 
- $pm10 = $_POST['pm10'];
- $pm2_5 = $_POST['pm2_5'];
- $secret = $_POST['secret'];
- $station = $_POST['id'];
- $temp = $_POST['temp'];
- $humid = $_POST['humid'];
- $nickname = $_POST['nickname'];
- $src_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+$pm10 = $_POST['pm10'];
+$pm2_5 = $_POST['pm2_5'];
+$secret = $_POST['secret'];
+$station = $_POST['id'];
+$temp = $_POST['temp'];
+$humid = $_POST['humid'];
+$nickname = $_POST['nickname'];
+$src_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 
-if (!$temp) $temp = "NULL"  ;
-if (!$humid) $humid = "NULL";
+
+//TOM-DEBUG
+if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+  $src_ip = $_SERVER["HTTP_CF_CONNECTING_IP"];
+}
+file_put_contents('/home/dev/public_html/assets/api/logs/post.log', date("Y-m-d H:i:s") . "|" . $src_ip . "|" . var_export($_POST, true) . "\n", FILE_APPEND);
+//END-TOM-DEBUG
+
+
+if (!$temp)
+  $temp = "NULL";
+if (!$humid)
+  $humid = "NULL";
 
 if ($secret != 'e96cfe7eb8b48d6b5c492de81383275fce7a8bc743eccde62c6efce7aacba1e9') {
   die('access denied.');
 }
 
-$conn = mysql_connect("localhost", "dev", "liveboxit");
-if (!$conn) {
-    die('Could not connect: ' . mysql_error());
+$mysqli = new mysqli("localhost", "dev", "liveboxit", "dev");
+
+if ($mysqli->connect_errno) {
+  echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+  exit();
 }
 
-if($pm2_5=="" || $pm2_5==0) {
-	exit;
-}//aun
+if ($pm2_5 == "" || $pm2_5 == 0) {
+  exit;
+} //aun
 else {
 
+  $sql_temp = "INSERT INTO `log_zdata` (`source_id`, `log_pm1`, `log_pm10`, `log_pm25`, `temp`, `humid`, `wind_speed`, `wind_direction`, `atmospheric`, `source_ip`) VALUES ($station, NULL, $pm10, $pm2_5, $temp, $humid, NULL, NULL, NULL, \"$src_ip\")";
+  $res3 = $mysqli->query($sql_temp);
 
-	mysql_select_db("dev", $conn);
-	$sql = "INSERT INTO `log_data_2561` (`source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `source_ip`) VALUES ($station, $pm10, $pm2_5, $temp, $humid, \"$src_ip\")";
-	// echo "$sql";
-	$res = mysql_query($sql, $conn);
-        if (!$res) {
-            // echo "FAILED: " . $sql . "\n";
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $sql . "\n";
-            echo $message;
-        }
-        else {
-            echo "OK: " . $sql . "\n";
-        }
 
-	$sql = "INSERT INTO `log_data_2562` (`source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `nickname`, `source_ip`) VALUES ($station, $pm10, $pm2_5, $temp, $humid, \"$nickname\", \"$src_ip\")";
-	$res = mysql_query($sql, $conn);
-        if (!$res) {
-            // echo "FAILED: " . $sql . "\n";
-            $message  = 'Invalid query: ' . mysql_error() . "\n";
-            $message .= 'Whole query: ' . $sql . "\n";
-            echo $message;
-        }
-        else {
-            echo "OK: " . $sql . "\n";
-        }
-	mysql_close($conn);
+  $sql = "INSERT INTO `log_data_2561` (`source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `source_ip`) VALUES ($station, $pm10, $pm2_5, $temp, $humid, \"$src_ip\")";
+  $res = $mysqli->query($sql);
+  // if (!$res) {
+  //     // echo "FAILED: " . $sql . "\n";
+  //     //$message  = 'Invalid query: ' . mysql_error() . "\n";
+  //     $message .= 'Whole query: ' . $sql . "\n";
+  //     echo $message;
+  // }
+  // else {
+  //     echo "OK: " . $sql . "\n";
+  // }
 
-	// echo "$POST=" . print_r(json_encode($_POST), 1);
-		//    print_r($_SERVER);
-	// code($_POST), 1);
+  $sql2 = "INSERT INTO `log_data_2562` (`source_id`, `log_pm10`, `log_pm25`, `temp`, `humid`, `nickname`, `source_ip`) VALUES ($station, $pm10, $pm2_5, $temp, $humid, \"$nickname\", \"$src_ip\")";
+  $res2 = $mysqli->query($sql2);
+  // if (!$res) {
+  //     // echo "FAILED: " . $sql . "\n";
+  //     //$message  = 'Invalid query: ' . mysql_error() . "\n";
+  //     $message .= 'Whole query: ' . $sql . "\n";
+  //     echo $message;
+  // }
+  // else {
+  //     echo "OK: " . $sql . "\n";
+  // }
+
+
+
+
+  //mysql_close($conn);
+  // echo "$POST=" . print_r(json_encode($_POST), 1);
+  //    print_r($_SERVER);
+  // code($_POST), 1);
 }
-		//    print_r($_SERVER);
+//    print_r($_SERVER);
 /*
 }
 else {
