@@ -35,4 +35,5 @@ while($row = $resultx -> fetch_assoc()){
     echo $sql2;
     echo '<br/>';
     echo $log_id.'-'.$station.'<hr/>';
+    header("Refresh:10");
 }
